@@ -70,7 +70,7 @@
         [itemlist addSubview:inProgressIndicator];
         
         
-        [self performSelector:@selector(startEnumPortsProcedure) withObject:nil afterDelay:1.0];
+        //[self performSelector:@selector(startEnumPortsProcedure) withObject:nil afterDelay:1.0];
         
         
         if (mode == 0) {// monitor
@@ -164,6 +164,12 @@ int emuLocation = 0,totalLen = 0;
 */
 
 #pragma mark bleSerialComManager begin
+-(void)bleSerilaComManagerDidEnumComplete:(BLESerialComManager *)bleSerialComManager
+{
+  [inProgressIndicator stopAnimating];
+  [foundSensors addObjectsFromArray:bleSerialComManager.ports];
+  [itemlist reloadData];
+}
 -(void)bleSerilaComManager:(BLESerialComManager *)bleSerialComManager withEnumeratedPorts:(NSArray *)ports{
     NSLog(@"withEnumeratedPorts");
     [inProgressIndicator stopAnimating];

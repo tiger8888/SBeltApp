@@ -25,5 +25,5 @@
 +(ZLBluetoothLEManage *)sharedInstanceWithLandscape:(BOOL)bLand mode:(int)mode;
 +(float)rollAverage:(float)value;
 -(void)syncCurrentTime;
-
+-(void)startEnumPortsProcedure;
 @end

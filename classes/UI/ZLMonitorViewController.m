@@ -40,6 +40,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+      ZLBluetoothLEManage *bleMgr = [ZLBluetoothLEManage sharedInstanceWithLandscape:NO mode:0];
+      
+      bleSerialComMgr.delegate = bleMgr;
+
     }
     return self;
 }
@@ -389,13 +393,13 @@ NSTimer *writeLoopTimer;
     [self.view addSubview:settingView];
 }
 -(void)bluetoothFunction{
-    NSLog(@"bluetoothFunction");
-    ZLBluetoothLEManage *bleMgr = [ZLBluetoothLEManage sharedInstanceWithLandscape:NO mode:0];
-    
-    bleSerialComMgr.delegate = bleMgr;
-    
-    [self.view addSubview:bleMgr];
-    
+  NSLog(@"bluetoothFunction");
+  ZLBluetoothLEManage *bleMgr = [ZLBluetoothLEManage sharedInstanceWithLandscape:NO mode:0];
+  [bleMgr startEnumPortsProcedure];
+  bleSerialComMgr.delegate = bleMgr;
+
+  [self.view addSubview:bleMgr];
+  
 }
 -(void)freezeFunction{
     NSLog(@"freezeFunction");

@@ -29,9 +29,11 @@
 
 }
 
-@property (assign,nonatomic)id<BLESerialComManagerDelegate> delegate;
-@property (nonatomic,retain) NSMutableArray *ports;
+@property (assign,nonatomic) id<BLESerialComManagerDelegate> delegate;
+@property (nonatomic,retain) NSMutableArray                 *ports;
+@property (nonatomic)        centralStateType               state;
 
+@property (strong,nonatomic)    NSCondition *_condition;
 
 /*****
   @方法       sharedInstance;
@@ -58,8 +60,9 @@
 
 /*
  @方法        stopEnumeratePorts;
- @描述        终止枚举端口
+ @描述        枚举所有BLE端口,timeout设置超时时间,bleSerilaComManager:withPorts:返回端口列表
  @查看        resultCodeType
+ @查看        bleSerilaComManager:withPorts:
  */
 -(resultCodeType)stopEnumeratePorts;
 
@@ -119,12 +122,29 @@
 
 @protocol BLESerialComManagerDelegate <NSObject>
 @required
+
+/*
+ @接口        bleSerilaComManagerDidStateChange:
+ @描述        当BLESerialComManager的state变量改变时，此接口被调用
+ @查看        BLESerialComManager
+ */
+-(void)bleSerilaComManagerDidStateChange:(BLESerialComManager *)bleSerialComManager;
+
+
 /*
  @接口        bleSerilaComManager:withEnumeratedPorts:
  @描述        在调用startEnumeratePorts:方法后，此接口返回结果
  @查看        startEnumeratePorts
  */
--(void)bleSerilaComManager:(BLESerialComManager *)bleSerialComManager withEnumeratedPorts:(NSArray *)ports;
+-(void)bleSerilaComManagerDidEnumComplete:(BLESerialComManager *)bleSerialComManager;
+
+/*
+ @接口        bleSerilaComManager:didFoundPort:
+ @描述        在调用startEnumeratePorts:方法后，此接口返回各个接口
+ @查看        startEnumeratePorts
+ */
+-(void)bleSerilaComManager:(BLESerialComManager *)bleSerialComManager didFoundPort:(BLEPort *)port;
+
 
 /*
  @接口        bleSerilaComManager:didOpenPort:withResult:
@@ -139,7 +159,18 @@
  @描述        接收到数据后，以配置参数的长度作为调用此接口的标准
  @查看        BLEPort
  */
+
+
 -(void)bleSerialComManager:(BLESerialComManager *)bleSerialComManager didDataReceivedOnPort:(BLEPort *)port withLength:(unsigned int)length;
+
+/*
+ @接口        bleSerilaComManager:didClosedPort:
+ @描述        关闭串口
+ @查看        BLEPort
+ */
+
+
+-(void)bleSerialComManager:(BLESerialComManager *)bleSerialComManager didClosedPort:(BLEPort *)port;
 
 @optional
 

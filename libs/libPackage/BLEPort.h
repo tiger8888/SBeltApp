@@ -36,6 +36,7 @@ typedef  NS_ENUM(NSInteger, PORT_STATE){
 @property (atomic,retain)    NSMutableData     *readBuffer;
 @property (nonatomic,retain) NSData            *address;
 
+@property (strong,nonatomic)    NSCondition *_condition;
 
 -(void)startWriteData;
 -(NSData *)readData:(int)length;

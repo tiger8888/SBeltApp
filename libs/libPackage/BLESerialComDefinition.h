@@ -16,10 +16,23 @@ typedef enum _result_code{
     RESULT_ERROR_PORT_INVALID           = RESULT_ERROR_BASE + 1,
     RESULT_ERROR_STATE_WRONG            = RESULT_ERROR_BASE + 2,
     RESULT_ERROR_NULL_ADDRESS           = RESULT_ERROR_BASE + 3,
-
+    RESULT_ERROR_DISCOVER_TIMEOUT       = RESULT_ERROR_BASE + 4,
     
     RESULT_CODE_TYPE_END
 }resultCodeType;
+
+typedef enum _central_state{
+    
+    CENTRAL_STATE_UNKNOWN,
+    CENTRAL_STATE_RESETTING,
+    CENTRAL_STATE_UNSUPPORTED,
+    CENTRAL_STATE_UNAUTHORIZED,
+    CENTRAL_STATE_POWEREDOFF,
+    CENTRAL_STATE_POWEREDON,
+    
+    CENTRAL_STATE_END
+    
+}centralStateType;
 
 
 /*paramsPackage4Configure*/
